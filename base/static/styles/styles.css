@@ -1,0 +1,21 @@
+body {
+  background-color:#112A2D;
+  font-family:sans-serif;
+  color:grey;
+}
+
+h1 {
+  color:#63BCCB;
+}
+
+.upload-button {
+  display:inline-block;
+  margin-left:auto;
+  margin-right:auto;
+  background-color:#000;
+}
+
+
+footer p {
+  text-align:center;
+}

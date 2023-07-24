@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+{% block content %}
+    {# Hero Section #}
+    <div class="px-4 pt-5 my-5 text-center border-bottom">
+        <h1 class="display-4 fw-bold text-body-emphasis">Unlocking Text from Images: Empowering Your Data with Precision OCR Solutions</h1>
+        <div class="col-lg-6 mx-auto">
+            <p class="lead mb-4">Welcome to our cutting-edge OCR service – Transforming images into actionable insights with unbeatable accuracy and speed!</p>
+
+            <form action="/results" class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5" method="post" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+
+                {{ form.image(id="tobeextracted") }}
+                {{ form.submit(class="btn btn-outline-primary") }}
+{#                <input type="file" >#}
+{#                <input type="submit" value="Upload" class="btn btn-outline-primary">#}
+
+            </form>
+
+        </div>
+    </div>
+
+{# Example Image Section #}
+    <div class="overflow-hidden" style="max-height:60vh;">
+        <div class="container px-5">
+            <img src="{{ url_for('static', filename='images/Screenshot (51).png') }}" class="img-fluid border rounded-3 shadow-lg mb-4 d-block m-auto" alt="Example image" width="700" height="500" loading="lazy">
+        </div>
+    </div>
+
+{% endblock %}
+
+
+
+
+
+
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#  <meta charset="UTF-8">#}
+{#  <meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+{#  <meta name="viewport" content="width=device-width, initial-scale=1.0">#}
+{#  <title>Document</title>#}
+{#  <!-- External CSS file linking -->#}
+{#  <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">#}
+{#</head>#}
+{#<body>#}
+{#  <main>#}
+{#      <h1>Introduction</h1>#}
+{#      <p>#}
+{#          Convert images to text by importing an image of in which there is a text into the area below and clicking#}
+{#          the convert button.#}
+{#      </p>#}
+{#      <hr>#}
+{##}
+{#      <form action="/results" method="post" enctype="multipart/form-data">#}
+{#          {{ form.hidden_tag() }}#}
+{##}
+{#          <label for="image">#}
+{##}
+{#          </label>#}
+{#          <div class="form-group">#}
+{#              {{ form.image()}}#}
+{#          </div>#}
+{##}
+{#          {{ form.submit() }}#}
+{#      </form>#}
+{##}
+{#  </main>#}
+{#  <script>#}
+{#      document.getElementById('image').onchange = function () {#}
+{#          document.getElementById('form').submit();#}
+{#      };#}
+{#  </script>#}
+{##}
+{#  <footer>#}
+{#    <p>#}
+{#      Designed and Implemented by @Gentle-Ninja&copy.#}
+{#    </p>#}
+{#  </footer>#}
+{#</body>#}
+{#</html>#}
