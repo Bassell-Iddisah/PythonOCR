@@ -1,0 +1,159 @@
+{#<!DOCTYPE html>#}
+{#<html>#}
+{#<head>#}
+{#  <title>My Website</title>#}
+{#  <!-- Add Bootstrap CSS link -->#}
+{#  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">#}
+{#  <!-- Add custom CSS for the layout -->#}
+{#  <style>#}
+{#    .loading-container {#}
+{#      /* Your custom styles for the loading screen container */#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#    }#}
+{##}
+{#    .lds-ring {#}
+{#        display: inline-block;#}
+{#        position: relative;#}
+{#        width: 80px;#}
+{#        height: 80px;#}
+{#    }#}
+{##}
+{#    .lds-ring div {#}
+{#      box-sizing: border-box;#}
+{#      display: block;#}
+{#      position: absolute;#}
+{#      width: 64px;#}
+{#      height: 64px;#}
+{#      margin: 8px;#}
+{#      border: 8px solid #3498db;#}
+{#      border-radius: 50%;#}
+{#      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;#}
+{#      border-color: #3498db transparent transparent transparent;#}
+{#    }#}
+{##}
+{#    @keyframes lds-ring {#}
+{#      0% {#}
+{#        transform: rotate(0deg);#}
+{#      }#}
+{#      100% {#}
+{#        transform: rotate(360deg);#}
+{#      }#}
+{#    }#}
+{##}
+{#    .popup-container {#}
+{#      /* Your custom styles for the popup container */#}
+{#      display: flex;#}
+{#      justify-content: center;#}
+{#      align-items: center;#}
+{#      height: 100vh;#}
+{#    }#}
+{##}
+{#    .Loading-text {#}
+{#        text-align:center;#}
+{#    }#}
+{#  </style>#}
+{#</head>#}
+{#<body>#}
+{#  <!-- Loading Screen Container -->#}
+{#  <div class="loading-container">#}
+{#    <!-- Your loading screen content here -->#}
+{#    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>#}
+{#  </div>#}
+{#  <div class="Loading-text">#}
+{#      <h1>Your image is processing, please wait...</h1>#}
+{#  </div>#}
+{##}
+{#  <!-- Popup Modal Container -->#}
+{#  <div class="popup-container">#}
+{#    <!-- Button to trigger the Bootstrap modal -->#}
+{#    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#downloadModal">#}
+{#      Download File#}
+{#    </button>#}
+{#  </div>#}
+{##}
+{#  <!-- Bootstrap Modal -->#}
+{#  <div class="modal fade" id="downloadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">#}
+{#    <div class="modal-dialog" role="document">#}
+{#      <div class="modal-content">#}
+{#        <div class="modal-header">#}
+{#          <h5 class="modal-title" id="exampleModalLabel">Download File</h5>#}
+{#          <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+{#            <span aria-hidden="true">&times;</span>#}
+{#          </button>#}
+{#        </div>#}
+{#        <div class="modal-body">#}
+{#          <!-- Place your file download link here -->#}
+{#          <a href="/path/to/your/file" class="btn btn-success" download>Click to Download</a>#}
+{#        </div>#}
+{#      </div>#}
+{#    </div>#}
+{#  </div>#}
+{##}
+{#  <!-- Add Bootstrap JS and jQuery links -->#}
+{#  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>#}
+{#  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>#}
+{#  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>#}
+{#</body>#}
+{#</html>#}
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loading Screen Example with Actual API Call</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #loadingScreen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #loadingText {
+      margin-bottom: 20px;
+    }
+
+    #content {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="loadingScreen">
+    <h1 id="loadingText">Loading...</h1>
+    <div id="content">
+      <button id="apiButton">API Response Received!</button>
+    </div>
+  </div>
+
+  <script>
+    // Replace "YOUR_API_URL" with the actual API endpoint you want to call
+    const apiUrl = "YOUR_API_URL";
+
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        showContent();
+      })
+      .catch(error => {
+        console.error("Error fetching data:", error);
+        showContent(); // In case of an error, still show the button
+      });
+
+    function showContent() {
+      document.getElementById("loadingText").textContent = "API Response Received!";
+      document.getElementById("content").style.display = "block";
+    }
+  </script>
+</body>
+</html>
