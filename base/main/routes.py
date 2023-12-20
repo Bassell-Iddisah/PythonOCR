@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, redirect, url_for, request, current_app
+from flask import render_template, Blueprint, redirect, url_for, request, current_app, session
 from base.main.forms import TakeImageForm
 from base.main.utils import save_pic
 from base.extractor import extract_text
@@ -18,11 +18,13 @@ def processing():
     form = TakeImageForm()
     picture = save_pic(form.image.data)
     extracted_text = extract_text(f"{current_app.root_path}/static/images/results/{picture}")
-    return redirect(url_for("main.results", extracted_text=extracted_text))
+    session['text'] = extracted_text
+    return redirect(url_for("main.results"))
 
 
-@main.route('/results<string:extracted_text>', methods=['GET', 'POST'])
-def results(extracted_text):
+@main.route('/results', methods=['GET', 'POST'])
+def results():
+    extracted_text = session.pop('text', "Nothing saved in sessions")
     return render_template('results.html', extracted_text=extracted_text)
 
 
