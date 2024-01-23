@@ -24,8 +24,10 @@ def processing():
 
 @main.route('/results', methods=['GET', 'POST'])
 def results():
+    form = TakeImageForm()
     extracted_text = session.pop('text', "Nothing saved in sessions")
-    return render_template('results.html', extracted_text=extracted_text)
+    # with open(F"")
+    return render_template('results.html', extracted_text=extracted_text, word=form.image.data)
 
 
 @main.route('/faqs')
