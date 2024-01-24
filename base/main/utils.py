@@ -1,8 +1,10 @@
 import os
-import os.path as path
-from flask import current_app
+import csv
 import secrets
+import pytesseract
+import os.path as path
 from PIL import Image
+from flask import current_app
 
 
 def save_pic(form_picture):
@@ -21,4 +23,31 @@ def save_pic(form_picture):
 
     image = Image.open(form_picture)  # Open the image
     image.save(picture_path)  # Save the image
-    return picture_fn  # return the image name to be saved in database
+    return picture_fn,picture_path  # return the image name to be saved in database
+
+
+
+def extract_text_from_image(image_path):
+    
+    img = Image.open(image_path) # Open the image using Pillow
+
+    text = pytesseract.image_to_string(img) # Open the image using Pillow
+
+    return text
+
+
+def process_text_and_save_tsv(text, output_tsv):
+    
+    rows = text.strip().split('\n') # Split the text into rows based on newline characters
+
+    write_path = path.join(current_app.root_path, 'files')
+    os.chdir(write_path)
+    with open(output_tsv, 'w', newline='') as tsvfile: # Create a TSV file and write the extracted data
+        tsv_writer = csv.writer(tsvfile, delimiter='\t')
+
+        
+        for row in rows: # Iterate through each row and split the values based on tab characters
+            values = row.split('\t')
+            
+            tsv_writer.writerow(values) # Write each row to the TSV file
+    return 0

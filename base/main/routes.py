@@ -1,7 +1,8 @@
-from flask import render_template, Blueprint, redirect, url_for, request, current_app, session
+from flask import render_template, Blueprint, redirect, url_for, request, current_app, session, flash, send_file
+from base.main.utils import extract_text_from_image, process_text_and_save_tsv
 from base.main.forms import TakeImageForm
 from base.main.utils import save_pic
-from base.extractor import extract_text
+import os
 
 
 main = Blueprint("main", __name__)
@@ -16,18 +17,30 @@ def home():
 @main.route('/p', methods=['GET', 'POST'])
 def processing():
     form = TakeImageForm()
-    picture = save_pic(form.image.data)
-    extracted_text = extract_text(f"{current_app.root_path}/static/images/results/{picture}")
-    session['text'] = extracted_text
+    output_tsv_path = "output_file.tsv" # Name the output file
+
+    picture_det = save_pic(form.image.data) # Save the image to the storage and return filename and saved path
+    session["picture_fn"] = picture_det[0]
+    extracted_text = extract_text_from_image(picture_det[1])
+
+    process_text_and_save_tsv(extracted_text, output_tsv_path) # Process the extracted text and save to tsv file
+    
+    #flash("The task was completed successfully", "success") # Display a successfully complete notification
+
     return redirect(url_for("main.results"))
 
 
 @main.route('/results', methods=['GET', 'POST'])
 def results():
     form = TakeImageForm()
-    extracted_text = session.pop('text', "Nothing saved in sessions")
-    # with open(F"")
-    return render_template('results.html', extracted_text=extracted_text, word=form.image.data)
+    file_name = session['picture_fn']
+
+    #_, fixed_path = file_path.split("static")
+    #actual_path = pacurrent_app.root_path
+    path = os.path.join(current_app.root_path, "files/output_file.tsv")
+    return send_file(path, as_attachment=True)
+
+    #return render_template('results.html', path=file_path)
 
 
 @main.route('/faqs')
